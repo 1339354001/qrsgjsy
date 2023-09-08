@@ -9,6 +9,7 @@ type ToDo struct {
 	ID     int    `json:"id"`
 	Title  string `json:"title"`
 	Status bool   `json:"status"`
+	Time   string `json:"time"`
 	//
 }
 
