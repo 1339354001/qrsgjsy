@@ -4,6 +4,7 @@ import (
 	"gin_project/modles"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"time"
 )
 
 func IndexHandler(c *gin.Context) {
@@ -43,6 +44,12 @@ func Update(c *gin.Context) {
 		return
 	}
 	todo, err := modles.GetTodoById(id)
+	if todo.Status == false {
+		now := time.Now()
+		todo.Time = now.Format("签到时间15:04:05")
+	} else {
+		todo.Time = ""
+	}
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		return
