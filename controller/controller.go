@@ -44,12 +44,6 @@ func Update(c *gin.Context) {
 		return
 	}
 	todo, err := modles.GetTodoById(id)
-	if todo.Status == false {
-		now := time.Now()
-		todo.Time = now.Format("签到时间15:04:05")
-	} else {
-		todo.Time = ""
-	}
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		return
@@ -57,6 +51,12 @@ func Update(c *gin.Context) {
 		c.JSON(http.StatusOK, todo)
 	}
 	c.BindJSON(&todo)
+	if todo.Status == true {
+		now := time.Now()
+		todo.Time = now.Format("签到时间15:04:05")
+	} else {
+		todo.Time = ""
+	}
 	err = modles.UpdateATodo(todo)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": err})
